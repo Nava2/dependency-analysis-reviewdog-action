@@ -1,5 +1,5 @@
-from typing import Iterator
 from pathlib import Path
+from typing import Iterator
 from advice_type import AdviceType, parse_advice_type
 
 
