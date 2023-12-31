@@ -8,7 +8,9 @@ class FixAdvice:
     Defines advice read from a build-health-report.txt file.
     """
 
-    def __init__(self, gradle_root: Path, project_name: str, advice_type: AdviceType, advice: str):
+    def __init__(
+        self, gradle_root: Path, project_name: str, advice_type: AdviceType, advice: str
+    ):
         self.project_name = project_name
         self.build_file = FixAdvice._get_build_file(gradle_root, project_name)
         self.advice_type = advice_type
@@ -24,7 +26,7 @@ class FixAdvice:
         dependencies_line_number = 0
         with self.build_file.open() as f:
             for line_number, line in enumerate(f.readlines()):
-                if line.strip() == 'dependencies {':
+                if line.strip() == "dependencies {":
                     dependencies_line_number = line_number
                     dependencies_line = line
                 if self.existing_gradle_line in line:
@@ -34,7 +36,7 @@ class FixAdvice:
         replace_text = self.existing_gradle_line
         if not found:
             line_number = dependencies_line_number
-            replace_text = 'dependencies {'
+            replace_text = "dependencies {"
             line = dependencies_line
 
         # print(f'Line number: {line_number}, line: \'{replace_text.rstrip()}\'')
@@ -43,7 +45,7 @@ class FixAdvice:
         line_index = line.index(replace_text)
 
         message = self.advice_type.advice(self.original_advice)
-        return f'{self.build_file}:{line_number}:{line_index}: {message}'
+        return f"{self.build_file}:{line_number}:{line_index}: {message}"
 
     @staticmethod
     def _get_build_file(gradle_root: Path, project_gradle_path: str) -> Path:
@@ -53,8 +55,8 @@ class FixAdvice:
         :param project_gradle_path:
         :return:
         """
-        project_path = project_gradle_path.strip(':').replace(':', '/')
-        return gradle_root / project_path / 'build.gradle.kts'
+        project_path = project_gradle_path.strip(":").replace(":", "/")
+        return gradle_root / project_path / "build.gradle.kts"
 
 
 def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
@@ -66,13 +68,13 @@ def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
 
     striped_lines = filter(lambda x: x, map(lambda l: l.strip(), lines))
 
-    project_name = 'NONE'
+    project_name = "NONE"
     advice = None
 
     for line in striped_lines:
-        if line.startswith('Advice for'):
-            project_name = line.split(' ')[2]
-            advice = 'NONE'
+        if line.startswith("Advice for"):
+            project_name = line.split(" ")[2]
+            advice = "NONE"
         else:
             parsed_advice_type = parse_advice_type(line)
             if parsed_advice_type:
