@@ -29,11 +29,12 @@ def main(args: Sequence[str]):
         default=sys.stdout,
         help="Path to gradle root directory",
     )
-    args = parser.parse_args(args=args)
 
-    build_health_report = Path(args.build_health_report[0])
-    gradle_root = Path(args.gradle_root)
-    output = args.output
+    parsed = parser.parse_args(args=args)
+
+    build_health_report = Path(parsed.build_health_report[0])
+    gradle_root = Path(parsed.gradle_root)
+    output = parsed.output
 
     with build_health_report.open() as f:
         with output:

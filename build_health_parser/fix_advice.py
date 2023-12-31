@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Iterator
+
 from advice_type import AdviceType, parse_advice_type
 
 
@@ -68,16 +69,16 @@ def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
 
     striped_lines = filter(lambda x: x, map(lambda x: x.strip(), lines))
 
-    project_name = "NONE"
-    advice = None
+    project_name: str | None = None
+    advice_type: AdviceType | None = None
 
     for line in striped_lines:
         if line.startswith("Advice for"):
             project_name = line.split(" ")[2]
-            advice = "NONE"
+            advice_type = None
         else:
             parsed_advice_type = parse_advice_type(line)
             if parsed_advice_type:
-                advice = parsed_advice_type
+                advice_type = parsed_advice_type
             else:
-                yield FixAdvice(gradle_root, project_name, advice, line)
+                yield FixAdvice(gradle_root, project_name, advice_type, line)

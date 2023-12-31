@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-
 from advice_type import AdviceType
 from fix_advice import FixAdvice, parse_lines
 
