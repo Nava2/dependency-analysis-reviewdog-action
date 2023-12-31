@@ -69,8 +69,8 @@ def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
 
     striped_lines = filter(lambda x: x, map(lambda x: x.strip(), lines))
 
-    project_name: str | None = None
-    advice_type: AdviceType | None = None
+    project_name = None
+    advice_type = None
 
     for line in striped_lines:
         if line.startswith("Advice for"):
