@@ -9,3 +9,13 @@ updates:
         update-types:
           - minor
           - patch
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions-minor:
+        update-types:
+          - minor
+          - patch
