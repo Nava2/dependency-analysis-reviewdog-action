@@ -4,8 +4,11 @@ from parse_build_health_report import main
 from test_fix_advice import build_health_report, simple_project_root  # noqa: F401
 
 
-# noqa: F811 This is used and imported
-def test_main(simple_project_root: Path, tmp_path: Path):
+def test_main(
+    # noqa: F811 This is used and imported
+    simple_project_root: Path,
+    tmp_path: Path,
+):
     output_file = tmp_path / "output.txt"
 
     main(
