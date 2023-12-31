@@ -81,4 +81,7 @@ def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
             if parsed_advice_type:
                 advice_type = parsed_advice_type
             else:
+                assert isinstance(project_name, str)
+                assert isinstance(advice_type, AdviceType)
+
                 yield FixAdvice(gradle_root, project_name, advice_type, line)
