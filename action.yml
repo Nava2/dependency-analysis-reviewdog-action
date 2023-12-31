@@ -39,7 +39,7 @@ runs:
       with:
         reviewdog_version: latest
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v5
       if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
 
     - shell: bash
