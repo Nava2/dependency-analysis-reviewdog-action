@@ -5,8 +5,7 @@ from test_fix_advice import build_health_report, simple_project_root  # noqa: F4
 
 
 def test_main(
-    # noqa: F811 This is used and imported
-    simple_project_root: Path,
+    simple_project_root: Path,  # noqa: F811 This is used and imported
     tmp_path: Path,
 ):
     output_file = tmp_path / "output.txt"
