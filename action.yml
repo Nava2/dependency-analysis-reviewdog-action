@@ -48,10 +48,7 @@ runs:
       run: |
         BUILD_HEALTH_REPORT="${GITHUB_WORKSPACE}/${{ inputs.build-report-path }}"
         
-        FILE_NAME=$(basename $BUILD_HEALTH_REPORT)
-        
-        BUILD_HEALTH_ERRORFORMAT="/tmp/${${FILE_NAME}%.*}.errorformat"
-        ./scripts/parse_build_health_report.py $BUILD_HEALTH_REPORT | \
+        ./scripts/parse_build_health_report.py ${BUILD_HEALTH_REPORT} | \
             reviewdog -name="${{ inputs.reviewdog-check-name }}" \
                       -reporter="${{ inputs.reviewdog-reporter }}" \
                       -efm="%f:%l:%c: %m" \
