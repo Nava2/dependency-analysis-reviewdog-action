@@ -1,0 +1,58 @@
+name: 'The name of your action here'
+description: 'Provide a description here'
+author: 'Your name or organization here'
+
+# Define your inputs here.
+inputs:
+  reviewdog-github-token:
+    description: Github Token for posting checks/comments
+    required: true
+
+  build-report-path:
+    description: 'Path to the build report'
+    required: true
+    default: build/reports/dependency-analysis/build-health-report.txt
+
+  reviewdog-reporter:
+    description: 'reviewdog reporter to use, default: `github-pr-check`'
+    required: true
+    default: github-pr-check
+  reviewdog-check-name:
+    description: 'reviewdog name to use, default: `buildHealth`'
+    required: true
+    default: buildHealth
+
+runs:
+  using: "composite"
+  steps:
+    - name: File Existence
+      uses: andstor/file-existence-action@v2
+      id: report_exists
+      with:
+        files: ${{ inputs.build-report-path }}
+
+    - uses: reviewdog/action-setup@v1
+      if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
+      with:
+        reviewdog_version: latest
+
+    - uses: actions/setup-python@v2
+      if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
+
+    - shell: bash
+      name: Run reviewdog 🐶
+      if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
+      run: |
+        BUILD_HEALTH_REPORT="${GITHUB_WORKSPACE}/${{ inputs.build-report-path }}"
+        
+        FILE_NAME=$(basename $BUILD_HEALTH_REPORT)
+        
+        BUILD_HEALTH_ERRORFORMAT="/tmp/${${FILE_NAME}%.*}.errorformat"
+        ./scripts/parse_build_health_report.py $BUILD_HEALTH_REPORT | \
+            reviewdog -name="${{ inputs.reviewdog-check-name }}" \
+                      -reporter="${{ inputs.reviewdog-reporter }}" \
+                      -efm="%f:%l:%c: %m" \
+                      -filter-mode=nofilter
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.reviewdog-github-token }}
+
