@@ -4,7 +4,7 @@ from parse_build_health_report import main
 from test_fix_advice import build_health_report, simple_project_root
 
 
-def test_main(simple_project_root: Path, tmp_path: Path):
+def test_main(simple_project_root, tmp_path: Path):
     output_file = tmp_path / "output.txt"
 
     main(

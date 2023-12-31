@@ -30,12 +30,12 @@ dependencies {
 
     build_report_txt.write_text(
         """
-    Advice for :some:project
-    Unused dependencies which should be removed:
-        api(project(":common"))
-        
-    These transitive dependencies should be declared directly:
-        testImplementation(project(":common"))
+Advice for :some:project
+Unused dependencies which should be removed:
+    api(project(":common"))
+
+These transitive dependencies should be declared directly:
+    testImplementation(project(":common"))
     """
     )
 

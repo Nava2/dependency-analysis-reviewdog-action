@@ -66,7 +66,7 @@ def parse_lines(gradle_root: Path, lines: Iterator[str]) -> Iterator[FixAdvice]:
     :return:
     """
 
-    striped_lines = filter(lambda x: x, map(lambda l: l.strip(), lines))
+    striped_lines = filter(lambda x: x, map(lambda x: x.strip(), lines))
 
     project_name = "NONE"
     advice = None
