@@ -1,6 +1,6 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'gradle dependency-analysis reviewdog hook'
+description: 'Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin'
+author: 'Kevin Brightwell'
 
 # Define your inputs here.
 inputs:

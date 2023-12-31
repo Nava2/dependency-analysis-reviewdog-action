@@ -1,4 +1,4 @@
-# dependency-analysis-reportdog-action
+# dependency-analysis-reviewdog-action
 
 Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin
 
