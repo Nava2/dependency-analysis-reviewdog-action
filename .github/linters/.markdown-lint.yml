@@ -7,4 +7,4 @@ MD029:
   style: one
 
 MD013:
-  line-length: 100
+  line_length: 100
