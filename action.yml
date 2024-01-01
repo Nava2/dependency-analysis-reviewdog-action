@@ -1,5 +1,6 @@
 name: 'gradle dependency-analysis reviewdog hook'
-description: 'Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin'
+description: | 
+  Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin
 author: 'Kevin Brightwell'
 branding:
   icon: check-circle
