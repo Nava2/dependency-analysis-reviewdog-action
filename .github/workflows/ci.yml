@@ -45,5 +45,7 @@ jobs:
         with:
           reviewdog-github-token: ${{ secrets.GITHUB_TOKEN }}
           build-report-path: ./functional_test/build-health-report.txt
+          gradle-root: ./functional_test
+
           # Don't try and post content to GitHub
           reviewdog-reporter: local
