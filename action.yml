@@ -1,5 +1,6 @@
 name: 'gradle dependency-analysis reviewdog hook'
-description: 'Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin'
+description: | 
+  Provides a @reviewdog/reviewdog check for @autonomousapps/dependency-analysis-gradle-plugin
 author: 'Kevin Brightwell'
 branding:
   icon: check-circle
@@ -25,6 +26,11 @@ inputs:
     required: true
     default: buildHealth
 
+  gradle-root:
+    description: 'Root directory of the gradle project'
+    required: true
+    default: .
+
 runs:
   using: "composite"
   steps:
@@ -41,6 +47,8 @@ runs:
 
     - uses: actions/setup-python@v5
       if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
+      with:
+        python-version: '3.12.1'
 
     - shell: bash
       name: Run reviewdog 🐶
@@ -48,7 +56,9 @@ runs:
       run: |
         BUILD_HEALTH_REPORT="${GITHUB_WORKSPACE}/${{ inputs.build-report-path }}"
         
-        ./scripts/parse_build_health_report.py ${BUILD_HEALTH_REPORT} | \
+        python ./build_health_parser/parse_build_health_report.py \
+               --gradle_root="${{ inputs.gradle-root }}" \
+               ${BUILD_HEALTH_REPORT} | \
             reviewdog -name="${{ inputs.reviewdog-check-name }}" \
                       -reporter="${{ inputs.reviewdog-reporter }}" \
                       -efm="%f:%l:%c: %m" \
