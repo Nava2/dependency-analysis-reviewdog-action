@@ -53,9 +53,8 @@ runs:
     - shell: bash
       name: Run reviewdog 🐶
       if: ${{ steps.report_exists.outputs.files_exists == 'true' }}
-      working-directory: ${{ github.action_path }}
       run: |
-        python ./build_health_parser/parse_build_health_report.py \
+        python "${{ github.action_path }}/build_health_parser/parse_build_health_report.py" \
                --gradle_root="${{ inputs.gradle-root }}" \
                "${{ inputs.build-report-path }}" | \
             reviewdog -name="${{ inputs.reviewdog-check-name }}" \
