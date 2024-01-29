@@ -35,7 +35,7 @@ runs:
   using: "composite"
   steps:
     - name: File Existence
-      uses: andstor/file-existence-action@v2
+      uses: andstor/file-existence-action@v3
       id: report_exists
       with:
         files: ${{ inputs.build-report-path }}
